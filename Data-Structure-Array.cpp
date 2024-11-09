@@ -2,17 +2,16 @@
 
 using namespace std;
 
-class Array {
+const int MAX_SIZE = 100;
+
+class MyArray {
 private:
-    int* arr;
+    int arr[MAX_SIZE];
     int size;
-    int capacity;
 
 public:
-    Array() {
+    MyArray() {
         size = 0;
-        capacity = 1;
-        arr = new int[capacity];
     }
 
     void Insert(int index, int value) {
@@ -21,49 +20,33 @@ public:
             return;
         }
 
-        if (size == capacity) {
-            int* temp = new int[2 * capacity];
-            for (int i = 0; i < size; i++) {
-                temp[i] = arr[i];
-            }
-            delete[] arr;
-            arr = temp;
-            capacity *= 2;
+        if (size == MAX_SIZE) {
+            cout << "Array is full!" << endl;
+            return;
         }
 
-        
         for (int i = size - 1; i >= index; i--) {
             arr[i + 1] = arr[i];
         }
 
-      
         arr[index] = value;
-
         size++;
     }
 
     int Delete_By_Value(int value) {
-        int index = -1;
         for (int i = 0; i < size; i++) {
             if (arr[i] == value) {
-                index = i;
-                break;
+                for (int j = i; j < size - 1; j++) {
+                    arr[j] = arr[j + 1];
+                }
+                size--;
+                return i;
             }
         }
-
-        if (index != -1) {
-            
-            for (int i = index; i < size - 1; i++) {
-                arr[i] = arr[i + 1];
-            }
-            size--;
-        }
-
-        return index;
+        return -1;
     }
 
     void Delete_By_Index(int index) {
-     
         if (index < 0 || index >= size) {
             cout << "Index out of bounds!" << endl;
             return;
@@ -83,12 +66,20 @@ public:
     }
 
     void Append(int value) {
-        Insert(size, value);
+        if (size == MAX_SIZE) {
+            cout << "Array is full!" << endl;
+            return;
+        }
+        arr[size++] = value;
     }
 
     void Reverse() {
-        for (int i = 0; i < size / 2; i++) {
-            swap(arr[i], arr[size - i - 1]);
+        int start = 0;
+        int end = size - 1;
+        while (start < end) {
+            swap(arr[start], arr[end]);
+            start++;
+            end--;
         }
     }
 
@@ -98,12 +89,26 @@ public:
                 return i;
             }
         }
-        return -1;
+        return 0;
     }
 };
 
 int main() {
-    Array arr;
-    
+    MyArray myArray;
+
+    myArray.Insert(0, 10);
+    myArray.Insert(1, 20);
+    myArray.Insert(2, 30);
+    myArray.Append(40);
+    myArray.Display();
+
+    myArray.Delete_By_Value(40);
+    myArray.Display();
+
+    cout << "Index of 30: " << myArray.Search_By_Value(30) << endl;
+
+    myArray.Reverse();
+    myArray.Display();
+
     return 0;
 }
