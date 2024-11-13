@@ -16,12 +16,12 @@ public:
 
     void Insert(int index, int value) {
         if (index < 0 || index > size) {
-            cout << "Index out of bounds!" << endl;
+            cout << "Done" << endl;
             return;
         }
 
         if (size == MAX_SIZE) {
-            cout << "Array is full!" << endl;
+            cout << "Array is full" << endl;
             return;
         }
 
@@ -43,7 +43,6 @@ public:
                 return i;
             }
         }
-        return -1;
     }
 
     void Delete_By_Index(int index) {
