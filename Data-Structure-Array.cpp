@@ -2,7 +2,7 @@
 
 using namespace std;
 
-const int MAX_SIZE = 100;
+const int MAX_SIZE = 1000;
 
 class MyArray {
 private:
@@ -16,12 +16,12 @@ public:
 
     void Insert(int index, int value) {
         if (index < 0 || index > size) {
-            cout << "Done" << endl;
+            cout << "Index out of bounds!" << endl;
             return;
         }
 
         if (size == MAX_SIZE) {
-            cout << "Array is full" << endl;
+            cout << "Array is full!" << endl;
             return;
         }
 
@@ -40,9 +40,10 @@ public:
                     arr[j] = arr[j + 1];
                 }
                 size--;
-                return i;
+                cout << "index of " << value << " = " << i << " --Deleted-- " << endl;
             }
         }
+        return 1;
     }
 
     void Delete_By_Index(int index) {
@@ -69,26 +70,31 @@ public:
             cout << "Array is full!" << endl;
             return;
         }
-        arr[size++] = value;
+        else {
+            arr[size++] = value;
+        }
     }
 
     void Reverse() {
         int start = 0;
         int end = size - 1;
+        int temp;
         while (start < end) {
-            swap(arr[start], arr[end]);
+            temp = arr[start];
+            arr[start] = arr[end];
+            arr[end] = temp;
             start++;
             end--;
         }
     }
 
-    int Search_By_Value(int value) {
-        for (int i = 0; i < size; i++) {
+    void Search_By_Value(int value) {
+        for (int i = 0; i <= size - 1; i++) {
             if (arr[i] == value) {
-                return i;
+                cout << "index of 20 : " << i << endl;
             }
+
         }
-        return 0;
     }
 };
 
@@ -97,14 +103,13 @@ int main() {
 
     myArray.Insert(0, 10);
     myArray.Insert(1, 20);
-    myArray.Insert(2, 30);
-    myArray.Append(40);
+    myArray.Append(30);
     myArray.Display();
 
-    myArray.Delete_By_Value(40);
+    myArray.Search_By_Value(20);
+    myArray.Delete_By_Value(20);
+    myArray.Delete_By_Index(4);
     myArray.Display();
-
-    cout << "Index of 30: " << myArray.Search_By_Value(30) << endl;
 
     myArray.Reverse();
     myArray.Display();
