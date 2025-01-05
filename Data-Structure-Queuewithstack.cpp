@@ -1,12 +1,59 @@
 #include <iostream>
-#include <stack>
 
 using namespace std;
 
+const int size = 100;
+
+class Stack {
+private:
+    int arr[100];
+    int top;
+
+public:
+    Stack() : top(-1) {}
+
+    bool isEmpty() {
+        return top == -1;
+    }
+
+    bool isFull() {
+        return top == 99;
+    }
+
+    void push(int x) {
+        if (!isFull()) {
+            arr[++top] = x;
+        }
+        else {
+            cout << "Error" << endl;
+        }
+    }
+
+    int pop() {
+        if (!isEmpty()) {
+            return arr[top--];
+        }
+        else {
+            cout << "Error" << endl;
+            return -1;
+        }
+    }
+
+    int peek() {
+        if (!isEmpty()) {
+            return arr[top];
+        }
+        else {
+            cout << "Error" << endl;
+            return -1;
+        }
+    }
+};
+
 class Queue {
 private:
-    stack<int> mainStack;
-    stack<int> secStack;
+    Stack mainStack; 
+    Stack secStack;
 
 public:
     void enqueue(int x) {
@@ -14,62 +61,79 @@ public:
     }
 
     void dequeue() {
-        if (mainStack.empty()) {
+        if (mainStack.isEmpty()) {
             cout << "Queue is empty" << endl;
             return;
         }
 
-       
-        while (!mainStack.empty()) {
-            secStack.push(mainStack.top());
-            mainStack.pop();
+        while (!mainStack.isEmpty()) {
+            secStack.push(mainStack.pop());
         }
 
-        
         secStack.pop();
 
-        
-        while (!secStack.empty()) {
-            mainStack.push(secStack.top());
-            secStack.pop();
+        while (!secStack.isEmpty()) {
+            mainStack.push(secStack.pop());
         }
     }
 
     int front() {
-        if (mainStack.empty()) {
+        if (mainStack.isEmpty()) {
             cout << "Queue is empty" << endl;
             return -1;
         }
 
-       
-        while (!mainStack.empty()) {
-            secStack.push(mainStack.top());
-            mainStack.pop();
+        while (!mainStack.isEmpty()) {
+            secStack.push(mainStack.pop());
         }
 
-        int frontElement = secStack.top();
+        int frontElement = secStack.peek(); 
 
-        
-        while (!secStack.empty()) {
-            mainStack.push(secStack.top());
-            secStack.pop();
+
+        while (!secStack.isEmpty()) 
+        {
+            mainStack.push(secStack.pop());
         }
 
-        return frontElement;
+        return frontElement; 
+    }
+
+    bool isEmpty() {
+        return mainStack.isEmpty();
+    }
+
+    void display() {
+        if (isEmpty()) {
+            cout << "Queue is empty" << endl;
+            return;
+        }
+
+        Stack tempStack; 
+        while (!mainStack.isEmpty()) {
+            tempStack.push(mainStack.pop());
+        }
+
+        while (!tempStack.isEmpty()) {
+            int element = tempStack.pop();
+            cout << element << " ";
+            mainStack.push(element); 
+        }
+
+        cout << endl;
     }
 };
 
 int main() {
-    Queue q;
-    q.enqueue(1);
-    q.enqueue(2);
-    q.enqueue(3);
-    q.enqueue(4);
+    Queue s;
+    s.enqueue(1);
+    s.enqueue(2);
+    s.enqueue(3);
+    s.enqueue(4);
 
-    cout << q.front() << endl;
+    cout << "Front : " << s.front() << endl; 
 
-    q.dequeue();
-    cout << q.front() << endl;
+    s.dequeue();
+    s.front();
 
-    return 0;
+    s.display(); 
 }
