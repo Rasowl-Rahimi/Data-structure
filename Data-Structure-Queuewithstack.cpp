@@ -2,22 +2,24 @@
 
 using namespace std;
 
-const int size = 100;
+const int SIZE = 100;
 
 class Stack {
 private:
-    int arr[100];
+    int arr[SIZE];
     int top;
 
 public:
-    Stack() : top(-1) {}
+    Stack() {
+        top = -1;
+    }
 
     bool isEmpty() {
         return top == -1;
     }
 
     bool isFull() {
-        return top == 99;
+        return top == SIZE -1;
     }
 
     void push(int x) {
@@ -114,12 +116,11 @@ public:
         }
 
         while (!tempStack.isEmpty()) {
-            int element = tempStack.pop();
-            cout << element << " ";
-            mainStack.push(element); 
+            int e = tempStack.pop();
+            cout << e << " ";
+            mainStack.push(e); 
         }
 
-        cout << endl;
     }
 };
 
