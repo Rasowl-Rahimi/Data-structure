@@ -153,7 +153,7 @@ public:
         } while (current != head);
         cout << endl;
     }
-    void reverse() {
+    void invert() {
         if (head == nullptr) {
             return; 
         }
