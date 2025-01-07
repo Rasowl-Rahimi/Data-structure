@@ -155,7 +155,7 @@ public:
     }
     void invert() {
         if (head == nullptr) {
-            return; 
+            cout<<"Error";
         }
 
         Node* current = head;
